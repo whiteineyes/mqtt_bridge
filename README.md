@@ -6,7 +6,7 @@ mqtt_bridge 为 ROS 和 MQTT 双向通讯提供了桥接功能
 
 ## Principle
 
-`mqtt_bridge` uses ROS message as its protocol. Messages from ROS are serialized by json (or messagepack) for MQTT, and messages from MQTT are deserialized for ROS topic. So MQTT messages should be ROS message compatible. (We use `rosbridge_library.internal.message_conversion` for message conversion.)
+`mqtt_bridge` uses ROS message as its protocol. Messages from ROS are serialized by json (or messagepack) for MQTT, and messages from MQTT are deserialized for ROS topic. So MQTT messages should be ROS message compatible. (We use `rosbridge_library.internal.message_conversion` for message conversion.)  
 `mqtt_bridge` 使用ROS message 作为它的协议， 将来自ROS的Messages 序列化成 MQTT的json， 将来自MQTT的消息被反序列化成为ROS topic. 因此MQTT messages 和 ROS message 可以做到兼容。（使用`rosbridge_library.internal.message_conversion`来进行 message 转换）  
 
 This limitation can be overcome by defining custom bridge class, though.
@@ -44,7 +44,7 @@ $ python -m pip install pymongo
 ``` 
 #### 安装完上述包后，再次启动launch  
 ```bash
-$ pip install -r requirements.txt
+$ roslaunch mqtt_bridge demo.launch
 ```
 ### 演示效果
 开启一个终端，用于查看`/pong`的回应  
