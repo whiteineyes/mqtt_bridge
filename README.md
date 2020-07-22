@@ -1,6 +1,7 @@
 # mqtt_bridge
 
 mqtt_bridge provides a functionality to bridge between ROS and MQTT in bidirectional.
+mqtt_bridge 为 ROS 和 MQTT 双向通讯提供了桥接功能
 
 
 ## Principle
@@ -9,6 +10,7 @@ mqtt_bridge provides a functionality to bridge between ROS and MQTT in bidirecti
 
 This limitation can be overcome by defining custom bridge class, though.
 
+`mqtt_bridge` 使用ROS message 作为它的协议， 将来自ROS的Messages 序列化成 MQTT的json， 将来自MQTT的消息被反序列化成为ROS topic. 因此MQTT messages 和 ROS message 可以做到兼容。（使用`rosbridge_library.internal.message_conversion`来进行 message 转换）
 
 ## Demo
 
@@ -19,12 +21,19 @@ $ sudo apt-get install mosquitto mosquitto-clients
 ```
 
 ### Install python modules
+### 确保Python版本为2,尽量使用pip2 install
 
 ```bash
 $ pip install -r requirements.txt
 ```
 
 ### launch node
+### 会提示报错，根据提示来安装缺少的python包，ros默认python2，尽量安装python2支持的包
+#### 1 sudo pip install inject==3.5.4
+#### 2 sudo pip install paho-mqtt
+#### 3 sudo apt install ros-melodic-rosbridge-library
+#### 4.1 sudo pip uninstall bson
+#### 4.2 python -m pip install pymongo
 
 ``` bash
 $ roslaunch mqtt_bridge demo.launch
