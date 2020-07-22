@@ -1,6 +1,10 @@
 # -*- coding: utf-8 -*-
+# 导入标准的库，而非本地库
 from __future__ import absolute_import
 
+# 实现抽象类
+# ABCMeta 生成抽象基础类的元类,由它生成的类可以被直接继承。
+# abstractmethod 定义抽象方法，除了这个装饰器，其余装饰器都被deprecated了。
 from abc import ABCMeta, abstractmethod
 
 import inject
@@ -9,7 +13,7 @@ import rospy
 
 from .util import lookup_object, extract_values, populate_instance
 
-
+# 创建桥接器
 def create_bridge(factory, msg_type, topic_from, topic_to, **kwargs):
     u""" bridge generator function
 
@@ -33,7 +37,7 @@ def create_bridge(factory, msg_type, topic_from, topic_to, **kwargs):
     return factory(
         topic_from=topic_from, topic_to=topic_to, msg_type=msg_type, **kwargs)
 
-
+# 实现抽象类
 class Bridge(object):
     u""" Bridge base class
 
@@ -128,6 +132,6 @@ class MqttToRosBridge(Bridge):
         msg_dict = self._deserialize(mqtt_msg.payload)
         return populate_instance(msg_dict, self._msg_type())
 
-
+# 'register_bridge_factory', 'create_bridge', 'Bridge','RosToMqttBridge', 'MqttToRosBridge'可以外部引用
 __all__ = ['register_bridge_factory', 'create_bridge', 'Bridge',
            'RosToMqttBridge', 'MqttToRosBridge']

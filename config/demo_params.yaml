@@ -14,6 +14,7 @@ bridge:
     msg_type: std_msgs.msg:Bool
     topic_from: /ping
     topic_to: ping
+
   - factory: mqtt_bridge.bridge:MqttToRosBridge
     msg_type: std_msgs.msg:Bool
     topic_from: ping
@@ -23,6 +24,7 @@ bridge:
     msg_type: std_msgs.msg:String
     topic_from: /echo
     topic_to: echo
+
   - factory: mqtt_bridge.bridge:MqttToRosBridge
     msg_type: std_msgs.msg:String
     topic_from: echo
@@ -32,6 +34,7 @@ bridge:
     msg_type: std_msgs.msg:String
     topic_from: /private/echo
     topic_to: ~/echo
+    
   - factory: mqtt_bridge.bridge:MqttToRosBridge
     msg_type: std_msgs.msg:String
     topic_from: ~/echo

@@ -17,7 +17,7 @@ This limitation can be overcome by defining custom bridge class, though.
 ## Demo
 
 ### prepare MQTT broker and client  
-### 准备MQTT的服务端和客户端  
+### 准备MQTT的broker和客户端  
 ```
 $ sudo apt-get install mosquitto mosquitto-clients  
 ```
