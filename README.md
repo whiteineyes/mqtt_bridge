@@ -7,7 +7,8 @@ mqtt_bridge 为 ROS 和 MQTT 双向通讯提供了桥接功能
 ## Principle
 
 `mqtt_bridge` uses ROS message as its protocol. Messages from ROS are serialized by json (or messagepack) for MQTT, and messages from MQTT are deserialized for ROS topic. So MQTT messages should be ROS message compatible. (We use `rosbridge_library.internal.message_conversion` for message conversion.)  
-`mqtt_bridge` 使用ROS message 作为它的协议， 将来自ROS的Messages 序列化成 MQTT的json， 将来自MQTT的消息被反序列化成为ROS topic. 因此MQTT messages 和 ROS message 可以做到兼容。（使用`rosbridge_library.internal.message_conversion`来进行 message 转换）  
+
+`mqtt_bridge` 使用ROS message 作为它的协议， 将来自ROS的Messages 序列化成 MQTT的json， 将来自MQTT的消息被反序列化成为ROS topic，以达到MQTT messages 和 ROS message 的兼容目的。（使用`rosbridge_library.internal.message_conversion`来进行 message 转换）  
 
 This limitation can be overcome by defining custom bridge class, though.
 
@@ -15,79 +16,81 @@ This limitation can be overcome by defining custom bridge class, though.
 
 ## Demo
 
-### prepare MQTT broker and client
-### 准备MQTT的服务端和客户端
+### prepare MQTT broker and client  
+### 准备MQTT的服务端和客户端  
 ```
-$ sudo apt-get install mosquitto mosquitto-clients
+$ sudo apt-get install mosquitto mosquitto-clients  
 ```
 
-### Install python modules
-#### 确保Python版本为2,尽量使用pip2 install
+### Install python modules  
+#### 确保Python版本为2,尽量使用pip2 install  
 
 ```bash
-$ pip install -r requirements.txt
+$ pip install -r requirements.txt  
 ```
 
-### launch node
+### launch node  
 
 ``` bash
-$ roslaunch mqtt_bridge demo.launch
+$ roslaunch mqtt_bridge demo.launch  
 ```
-#### 会提示报错，根据提示来安装缺少的python包，ros默认python2，尽量安装python2支持的包
-ros-`****`-rosbridge-library中，`****`替换成自己的ros版本 
+#### 会提示报错，根据提示来安装缺少的python包，ros默认python2，尽量安装python2支持的包  
+python2 最高只支持inject3.5.4  
+ros-`****`-rosbridge-library中，`****`替换成自己的ros版本  
+不支持bson，需要卸载，然后安装pymongo  
 ```bash
-$ sudo pip install inject==3.5.4
-$ sudo pip install paho-mqtt
-$ sudo apt install ros-****-rosbridge-library
-$ sudo pip uninstall bson
-$ python -m pip install pymongo 
+$ sudo pip install inject==3.5.4  
+$ sudo pip install paho-mqtt  
+$ sudo apt install ros-****-rosbridge-library  
+$ sudo pip uninstall bson  
+$ python -m pip install pymongo  
 ``` 
 #### 安装完上述包后，再次启动launch  
 ```bash
-$ roslaunch mqtt_bridge demo.launch
+$ roslaunch mqtt_bridge demo.launch  
 ```
-### 演示效果
+### 演示效果  
 开启一个终端，用于查看`/pong`的回应  
 
 ```bash 
-$ rostopic echo /pong
+$ rostopic echo /pong  
 ``` 
 再开启另外一个终端，用于发布消息到`/ping`  
 ```bash 
-$ rostopic pub /ping std_msgs/Bool "data: true"
+$ rostopic pub /ping std_msgs/Bool "data: true"  
 ```
 
-切换回可以`/pong`的终端，可以看到回应
+切换回可以`/pong`的终端，可以看到回应  
 
 ```
-$ rostopic echo /pong
-data: True
----
+$ rostopic echo /pong  
+data: True  
+---  
 ```
 下列示例同上  
-Publish "hello" to `/echo`,
+Publish "hello" to `/echo`  
 
 ```
-$ rostopic pub /echo std_msgs/String "data: 'hello'"
+$ rostopic pub /echo std_msgs/String "data: 'hello'"  
 ```
 
-and see response to `/back`.
+and see response to `/back`  
 
 ```
-$ rostopic echo /back
-data: hello
+$ rostopic echo /back  
+data: hello  
 ---
 ```
 
-You can also see MQTT messages using `mosquitto_sub`
+You can also see MQTT messages using `mosquitto_sub`  
 
 ```
-$ mosquitto_sub -t '#'
+$ mosquitto_sub -t '#'  
 ```
 
-## Usage
+## Usage  
 
-parameter file (config.yaml):
+parameter file (config.yaml):  
 
 ``` yaml
 mqtt:
@@ -109,7 +112,7 @@ bridge:
     topic_to: /pong
 ```
 
-launch file:
+launch file:  
 
 ``` xml
 <launch>
