@@ -21,22 +21,29 @@ $ sudo apt-get install mosquitto mosquitto-clients
 ```
 
 ### Install python modules
-### 确保Python版本为2,尽量使用pip2 install
+#### 确保Python版本为2,尽量使用pip2 install
 
 ```bash
 $ pip install -r requirements.txt
 ```
 
 ### launch node
-### 会提示报错，根据提示来安装缺少的python包，ros默认python2，尽量安装python2支持的包
-#### 1 sudo pip install inject==3.5.4
-#### 2 sudo pip install paho-mqtt
-#### 3 sudo apt install ros-melodic-rosbridge-library
-#### 4.1 sudo pip uninstall bson
-#### 4.2 python -m pip install pymongo
 
 ``` bash
 $ roslaunch mqtt_bridge demo.launch
+```
+#### 会提示报错，根据提示来安装缺少的python包，ros默认python2，尽量安装python2支持的包
+ros-`****`-rosbridge-library中，`****`替换成自己的ros版本 
+```bash
+$ sudo pip install inject==3.5.4
+$ sudo pip install paho-mqtt
+$ sudo apt install ros-****-rosbridge-library
+$ sudo pip uninstall bson
+$ python -m pip install pymongo 
+``` 
+#### 安装完上述包后，再次启动launch
+```bash
+$ pip install -r requirements.txt
 ```
 
 Publish to `/ping`,
