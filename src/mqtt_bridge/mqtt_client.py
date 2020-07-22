@@ -3,7 +3,8 @@ import ssl
 
 import paho.mqtt.client as mqtt
 import rospy
-
+from sensor_msgs.msg import PointCloud2
+from sensor_msgs import point_cloud2
 
 def default_mqtt_client_factory(params):
     u""" MQTT Client factory

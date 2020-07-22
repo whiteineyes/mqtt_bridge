@@ -34,8 +34,31 @@ bridge:
     msg_type: std_msgs.msg:String
     topic_from: /private/echo
     topic_to: ~/echo
-    
+
   - factory: mqtt_bridge.bridge:MqttToRosBridge
     msg_type: std_msgs.msg:String
     topic_from: ~/echo
     topic_to: /private/back
+
+  # test : sensor_msgs.msg:PointCloud2   topic:/segmented_cloud
+  # 接受来自ros的topic -> MQTT内部序列化 -> 用ros topic的方式发出去
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: sensor_msgs.msg:PointCloud2
+    topic_from: /segmented_cloud
+    topic_to: segmented_cloud
+    
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: sensor_msgs.msg:PointCloud2
+    topic_from: segmented_cloud
+    topic_to: /segmented_cloud_fromMqtt
+
+  # # test : sensor_msgs.msg:PointCloud2    topic:/laser_cloud_surround_original
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: sensor_msgs.msg:PointCloud2
+    topic_from: /laser_cloud_surround_original
+    topic_to: laser_cloud_surround_original
+    
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: sensor_msgs.msg:PointCloud2
+    topic_from: laser_cloud_surround_original
+    topic_to: /laser_cloud_surround_original_fromMqtt

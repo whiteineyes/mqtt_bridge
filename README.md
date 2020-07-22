@@ -4,7 +4,7 @@ mqtt_bridge provides a functionality to bridge between ROS and MQTT in bidirecti
 mqtt_bridge 为 ROS 和 MQTT 双向通讯提供了桥接功能
 
 
-## Principle
+## 1.Principle
 
 `mqtt_bridge` uses ROS message as its protocol. Messages from ROS are serialized by json (or messagepack) for MQTT, and messages from MQTT are deserialized for ROS topic. So MQTT messages should be ROS message compatible. (We use `rosbridge_library.internal.message_conversion` for message conversion.)  
 
@@ -14,22 +14,22 @@ This limitation can be overcome by defining custom bridge class, though.
 
 
 
-## Demo
+## 2.Demo
 
-### prepare MQTT broker and client  
-### 准备MQTT的broker和客户端  
+### 2.1 prepare MQTT broker and client  
+### 2.1 准备MQTT的broker和客户端  
 ```
 $ sudo apt-get install mosquitto mosquitto-clients  
 ```
 
-### Install python modules  
-#### 确保Python版本为2,尽量使用pip2 install  
+### 2.2 Install python modules  
+### 2.2 确保Python版本为2,尽量使用pip2 install  
 
 ```bash
 $ pip install -r requirements.txt  
 ```
 
-### launch node  
+### 2.3 launch node  
 
 ``` bash
 $ roslaunch mqtt_bridge demo.launch  
@@ -49,7 +49,7 @@ $ python -m pip install pymongo
 ```bash
 $ roslaunch mqtt_bridge demo.launch  
 ```
-### 演示效果  
+### 2.4 本地测试效果
 开启一个终端，用于查看`/pong`的回应  
 
 ```bash 
@@ -87,6 +87,41 @@ You can also see MQTT messages using `mosquitto_sub`
 ```
 $ mosquitto_sub -t '#'  
 ```
+## 3. 适配slam算法  
+以激光SLAM为例，假设需要发送 激光SLAM发布的点云消息`sensor_msgs.msg:PointCloud2`  
+### 3.1 在 `/config/demo_params.yaml`中，添加所需要中转的消息`bridge`，以下为示例：  
+```bash
+  # 格式：sensor_msgs.msg:PointCloud2   topic:/segmented_cloud
+  # ros topic：/segmented_cloud -> MQTT内部序列化 -> segmented_cloud -> 反序列化成ros消息-> 发布到topic：/segmented_cloud_fromMqtt
+  - factory: mqtt_bridge.bridge:RosToMqttBridge
+    msg_type: sensor_msgs.msg:PointCloud2
+    topic_from: /segmented_cloud
+    topic_to: segmented_cloud
+    
+  - factory: mqtt_bridge.bridge:MqttToRosBridge
+    msg_type: sensor_msgs.msg:PointCloud2
+    topic_from: segmented_cloud
+    topic_to: /segmented_cloud_fromMqtt
+```
+### 3.2 在`package.xml`中添加需要的消息类型，供编译   
+```xml
+  <exec_depend>sensors_msgs</exec_depend>
+```
+### 3.3 在 `app.py`、`bridge.py`和`mqtt_client.py` 头部添加消息库  
+```bash
+from sensor_msgs.msg import PointCloud2
+from sensor_msgs import point_cloud2
+```
+### 3.4 编译  
+```catkin_make```
+### 3.5 启动launch
+```bash
+$ roslaunch mqtt_bridge demo.launch  
+```
+### 3.6 效果举例
+在ros中，正常使用其他slam，在点云rivz中，添加一个topic`/segmented_cloud_fromMqtt`
+
+
 
 ## Usage  
 

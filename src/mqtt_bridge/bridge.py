@@ -10,6 +10,8 @@ from abc import ABCMeta, abstractmethod
 import inject
 import paho.mqtt.client as mqtt
 import rospy
+from sensor_msgs.msg import PointCloud2
+from sensor_msgs import point_cloud2
 
 from .util import lookup_object, extract_values, populate_instance
 

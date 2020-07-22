@@ -5,6 +5,8 @@ from __future__ import absolute_import
 import inject
 import paho.mqtt.client as mqtt
 import rospy
+from sensor_msgs.msg import PointCloud2
+from sensor_msgs import point_cloud2
 
 # 导入本地库
 from .bridge import create_bridge
