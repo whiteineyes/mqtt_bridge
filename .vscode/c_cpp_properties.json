@@ -1,0 +1,17 @@
+{
+  "configurations": [
+    {
+      "browse": {
+        "databaseFilename": "",
+        "limitSymbolsToIncludedHeaders": true
+      },
+      "includePath": [
+        "/home/vance/catkin_ws/devel/include/**",
+        "/opt/ros/melodic/include/**",
+        "/home/vance/catkin_ws/src/LeGO-LOAM/LeGO-LOAM/include/**",
+        "/usr/include/**"
+      ],
+      "name": "ROS"
+    }
+  ]
+}
