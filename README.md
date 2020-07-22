@@ -42,25 +42,29 @@ $ sudo apt install ros-****-rosbridge-library
 $ sudo pip uninstall bson
 $ python -m pip install pymongo 
 ``` 
-#### 安装完上述包后，再次启动launch
+#### 安装完上述包后，再次启动launch  
 ```bash
 $ pip install -r requirements.txt
 ```
+### 演示效果
+开启一个终端，用于查看`/pong`的回应  
 
-Publish to `/ping`,
-
-```
+```bash 
+$ rostopic echo /pong
+``` 
+再开启另外一个终端，用于发布消息到`/ping`  
+```bash 
 $ rostopic pub /ping std_msgs/Bool "data: true"
 ```
 
-and see response to `/pong`.
+切换回可以`/pong`的终端，可以看到回应
 
 ```
 $ rostopic echo /pong
 data: True
 ---
 ```
-
+下列示例同上  
 Publish "hello" to `/echo`,
 
 ```
