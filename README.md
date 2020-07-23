@@ -89,7 +89,8 @@ $ mosquitto_sub -t '#'
 ```
 ## 3. 适配slam算法  
 以激光SLAM为例，假设需要发送 激光SLAM发布的点云消息`sensor_msgs.msg:PointCloud2`，`topic`为`/segmented_cloud`    
-### 3.1 在 `/config/demo_params.yaml`中，添加所需要中转的消息`bridge`，以下为示例,修改`msg_type`、`topic_from`和`topic_to`：  
+### 3.1 在 `/config/demo_params.yaml`中，添加所需要中转的消息`bridge`  
+以下为示例,修改`msg_type`、`topic_from`和`topic_to`：  
 ```bash
   # 格式：sensor_msgs.msg:PointCloud2   topic:/segmented_cloud
   # ros topic：/segmented_cloud -> MQTT内部序列化 -> segmented_cloud -> 反序列化成ros消息-> 发布到topic：/segmented_cloud_fromMqtt
